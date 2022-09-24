@@ -138,7 +138,7 @@
             <a class="main-nav-link nav-cta" href="#cta">Bültene Kaydol</a>
           </li>
           <li>
-            <a class="main-nav-link theme-changer" href="/change_theme"
+            <a class="main-nav-link theme-changer"
               ><ion-icon name="sunny-outline"></ion-icon
             ></a>
           </li>
@@ -611,16 +611,25 @@
     <script>
       // Theme Changer
 
-      const themeChangerEl = document.querySelector(".theme-changer");
+      const themeChanger = document.querySelector(".theme-changer");
 
-      var siteTheme = "{{ site_theme|safe }}";
+      localStorage.setItem("theme", "light-theme");
 
-      if (siteTheme === "dark-theme") {
-        let iconTheme = themeChangerEl.querySelector("ion-icon");
-        iconTheme.setAttribute("name", "moon-outline");
-        document.body.classList.add("dark-theme");
-        document.body.classList.remove("light-theme");
-      }
+      themeChanger.addEventListener("click", (_e) => {
+        changeTheme();
+      });
+
+      const changeTheme = () => {
+        let siteTheme = localStorage.getItem("theme");
+
+        localStorage.setItem(
+          "theme",
+          siteTheme == "dark-theme" ? "light-theme" : "dark-theme"
+        );
+
+        document.body.classList.add(localStorage.getItem("theme"));
+        document.body.classList.remove(siteTheme);
+      };
     </script>
   </body>
 </html>
